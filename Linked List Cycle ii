@@ -1,0 +1,20 @@
+//https://leetcode.com/problems/linked-list-cycle-ii/description/
+
+ListNode *detectCycle(ListNode *head) 
+    {
+        ListNode* temp=head;
+        unordered_map<ListNode*, bool> visited;
+
+        while(temp!=NULL)
+        {
+            if(visited[temp]!=true)
+            {
+                visited[temp]=true;
+                temp=temp->next;
+            }
+            else
+                return temp;
+        }     
+
+        return temp;
+    }
