@@ -1,0 +1,66 @@
+//https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/description/
+
+ListNode* deleteDuplicates(ListNode* head) 
+    {
+        if(head==NULL or head->next==NULL)
+            return head;
+
+        // ListNode* prevNode=head;
+        int PrevVal=101;
+        ListNode* temp=head;
+
+        while(temp!=NULL)
+        {
+            if(temp->val!=PrevVal)
+            {
+                if(temp->next==NULL)
+                    return temp;
+                if(temp->next->val!=temp->val)
+                    break;
+            }
+            PrevVal=temp->val;
+            temp=temp->next;
+        }
+
+        if(temp==NULL)
+            return temp;
+
+        head=temp;
+        ListNode* head2=temp;
+        int prevValue=temp->val;
+
+        while(temp!=NULL)
+        {
+            temp=temp->next;
+
+            if(temp==NULL)
+                break;
+                
+            if(temp->val!=prevValue)
+            {
+                if(temp->next!=NULL) 
+                {
+                    if(temp->next->val!=temp->val)
+                    {
+                        head->next=temp;
+                        head=temp;
+                    }
+                }
+                else
+                {
+                    head->next=temp;
+                    head=temp;
+                }
+            }
+            prevValue=temp->val;
+
+
+        }
+
+        if(head->next!=NULL)
+            head->next=NULL;
+
+
+        return head2;
+
+    }
