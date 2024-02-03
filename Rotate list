@@ -1,0 +1,48 @@
+//https://leetcode.com/problems/rotate-list/description/
+
+    ListNode* rotateRight(ListNode* head, int k) 
+    {
+
+        //at first find the head using k%length
+        //then change to head in one loop
+
+
+        if(head==NULL or head->next==NULL)
+            return head;
+
+        vector<ListNode*> vec;
+        ListNode* temp=head;
+
+        while(temp!=NULL)
+        {
+            vec.push_back(temp);
+            temp=temp->next;
+        }
+
+        int penltimateTailIndex=vec.size()-2;
+
+        temp=head;
+        int length=0;
+
+        while(temp!=NULL)
+        {
+            temp=temp->next;
+            length++;
+        }
+
+        k=k%length;
+
+        for(int i=0;i<k;i++)
+        {
+            ListNode* penultimateTail=vec[penltimateTailIndex];
+        
+            penultimateTail->next->next=head;
+            head=penultimateTail->next;
+            penultimateTail->next=NULL;
+
+            penltimateTailIndex=penltimateTailIndex==0?vec.size()-1:penltimateTailIndex-1;
+
+        }    
+
+        return head;
+    }
