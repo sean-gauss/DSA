@@ -1,0 +1,30 @@
+//https://leetcode.com/problems/partition-list/
+
+ListNode* partition(ListNode* head, int x) 
+    {
+        ListNode* smaller=new ListNode(101);
+        ListNode* smallHead=smaller;
+        ListNode* greater=new ListNode(101);
+        ListNode* bigHead=greater;
+        ListNode* temp=head;
+
+        while(temp!=NULL)
+        {
+            if(temp->val<x)
+            {
+                smaller->next=temp;
+                smaller=temp;
+            }
+            else
+            {
+                greater->next=temp;
+                greater=temp;
+            }
+            temp=temp->next;
+        }
+
+        smaller->next =  bigHead->next;
+        greater->next=NULL;
+        delete(bigHead);
+        return(smallHead->next);
+    }
