@@ -1,0 +1,92 @@
+//https://leetcode.com/problems/reverse-linked-list-ii/description/
+
+ListNode* reverseList(ListNode* head) 
+    {
+        // if(head==NULL or head->next==NULL)
+        //     return head;
+
+        ListNode* prevNode =  NULL;
+        ListNode* temp=head;
+
+        while(temp!=NULL)
+        {
+            ListNode* nextNode=temp->next;
+            temp->next=prevNode;
+            prevNode=temp;
+            temp=nextNode;
+            // printLoop(head)  ;
+        }  
+
+        
+
+        return prevNode;
+    }
+    ListNode* reverseBetween(ListNode* head, int left, int right) 
+    {
+        if(head==NULL or head->next==NULL or left==right)
+            return head;
+
+        ListNode* preHead;
+        ListNode* postTail;
+        ListNode* temp=head;
+        ListNode* start;
+        ListNode* end;
+
+        if(left==1)    
+            preHead=NULL;
+
+
+        for(int i=1;temp!=NULL;i++)
+        {
+            if(i==left-1)
+                preHead=temp;
+            if(i==left)
+                start=temp;
+            if(i==right)
+            {
+                end=temp;
+                postTail=temp->next;
+                break;
+            }
+            temp=temp->next;
+        }
+
+        // cout<<"print1\n";
+
+        temp=head;
+        for(int i=1;i<=right;i++)
+        {
+            if(i==right)
+            {
+                temp->next=NULL;
+                break;
+            }
+            temp=temp->next;
+        }
+
+        // printLoop(head);
+
+
+        // cout<<"print2\n";
+
+        ListNode* ret=reverseList(start);
+
+        if(left==1)
+        {
+            start->next=postTail;
+            return ret;
+        }
+        
+        preHead->next=ret;
+        // printLoop(head)  ;
+
+        
+
+        // cout<<"print3\n";
+
+        head=left==1?ret:head;
+        // preHead->next=ret;
+        start->next=postTail;
+        
+        return head;
+    }
